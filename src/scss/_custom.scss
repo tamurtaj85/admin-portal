@@ -1,0 +1,10 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+// overwrite def variables here
+
+@import "bootstrap/scss/functions"; // Required
+@import "bootstrap/scss/variables"; // Required
+@import "bootstrap/scss/mixins"; // Required
+
+@import "bootstrap/scss/root"; // Required
+@import "bootstrap/scss/reboot"; // Required

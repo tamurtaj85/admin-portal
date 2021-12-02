@@ -3,9 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 
+import { ReactRouterSetup } from "./routes/index";
+
 ReactDOM.render(
-  <React.StrictMode>
+  <ReactRouterSetup>
     <App />
-  </React.StrictMode>,
+  </ReactRouterSetup>,
+
   document.getElementById("root")
 );
