@@ -8,9 +8,9 @@ import "./scss/index.scss";
 // import Button from "./components/Buttons/component.button";
 
 // Pages
-import { PageAuth } from "./pages/auth/page-auth";
-import { PageProduct } from "./pages/product/page-product";
-import { PageUser } from "./pages/user/page-user";
+// import { PageAuth } from "./pages/auth/page-auth";
+// import { PageProduct } from "./pages/product/page-product";
+// import { PageUser } from "./pages/user/page-user";
 // import Demo from "./practice/practiceAuthPage";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       {/* <Demo /> */}
       {/* <PageAuth /> */}
-      <PageProduct />
+      {/* <PageProduct /> */}
       {/* <PageUser /> */}
     </div>
   );

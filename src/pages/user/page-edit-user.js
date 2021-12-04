@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
 
-export const PageUser = () => {
+export const PageEditUser = () => {
   const [user, setUser] = useState({
     verified: Boolean,
     userRole: String,
@@ -25,7 +25,7 @@ export const PageUser = () => {
   return (
     <Container>
       <Row>
-        <h1>Users Portal</h1>
+        <h1>User Controll Panel</h1>
       </Row>
       <Row>
         <Form onSubmit={handleSubmit}>
