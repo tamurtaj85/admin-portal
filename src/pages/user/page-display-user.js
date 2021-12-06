@@ -51,7 +51,7 @@ const SetTableData = (data) => {
       <tr key={user._id}>
         <td>{index + 1}</td>
         <td>
-          <Link to={`/edit-user:${user._id}`}>
+          <Link to={`/edit-user/:${user._id}`}>
             <ModeEditIcon style={{ color: "#F45118" }} />
           </Link>
         </td>

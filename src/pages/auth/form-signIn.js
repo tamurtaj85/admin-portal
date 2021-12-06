@@ -8,11 +8,17 @@ import { Container } from "react-bootstrap";
 
 import AuthServices from "../../services/service-auth";
 
+import { useNavigate } from "react-router";
+
 const SignInInputForm = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  const [signedIn, setSignedIn] = useState(false);
+
+  const navigateTo = useNavigate();
 
   function handleChange(e) {
     e.preventDefault();
@@ -23,13 +29,19 @@ const SignInInputForm = () => {
   async function getUserInfo() {
     const response = await AuthServices("sign-in", user);
 
-    console.log(response);
+    // console.log("SignIn: ", response);
+    if (response.status === 200) {
+      setSignedIn(!signedIn);
+      navigateTo("/dashboard");
+    } else {
+      if (signedIn === false) navigateTo("/");
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log("SignIn Console: ", user);
+    // console.log("SignIn Console: ", user);
     getUserInfo();
   }
 

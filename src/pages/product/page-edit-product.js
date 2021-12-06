@@ -5,7 +5,9 @@ import { Form, Button } from "react-bootstrap";
 
 import { Services } from "../../services/index";
 
-export const PageProduct = () => {
+import { useNavigate, useParams } from "react-router-dom";
+
+export const PageEditProduct = () => {
   const [product, setProduct] = useState({
     productName: "",
     productImg: "",
@@ -19,18 +21,39 @@ export const PageProduct = () => {
 
   const [categories, setCategories] = useState([]);
 
-  async function addProduct() {
-    const response = await Services.Product.AddProduct(product);
-    // console.log("Product Console: ", response);
+  const { id } = useParams();
+
+  const navigateTo = useNavigate();
+
+  async function getProductByID() {
+    const response = await Services.Product.GetProductByID(id);
+
+    if (response.status === 200) setProduct(await response.data);
+    // console.log("ByID: ", response);
   }
 
   async function getCategories() {
-    const response = Services.Categories.getCategories();
-    setCategories(await (await response).data);
-    // console.log(await (await response).data);
+    const response = await Services.Categories.getCategories();
+    setCategories(await response.data);
+    // console.log("Categories: ", response.data);
+  }
+
+  async function updateProduct() {
+    const response = await Services.Product.UpdateProduct(id, product);
+    // console.log("Product Console: ", response);
+
+    if (response.status === 200) navigateTo("/products");
+  }
+
+  async function deleteProduct() {
+    const response = await Services.Product.DeleteProduct(id);
+    // console.log("DeleteProduct:", response);
+
+    if (response.status === 200) navigateTo("/products");
   }
 
   useEffect(() => {
+    getProductByID();
     getCategories();
   }, []);
 
@@ -43,8 +66,8 @@ export const PageProduct = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // console.log("Product submit: ", product);
-    addProduct();
+    console.log("Product update: ", product);
+    updateProduct();
   }
 
   return (
@@ -131,7 +154,6 @@ export const PageProduct = () => {
                 onChange={handleChange}
                 value={product.productStatus}
               >
-                <option>Select Status</option>
                 <option value="In Production">In Production</option>
                 <option value="Discontinued">Discontinued</option>
               </Form.Select>
@@ -164,9 +186,18 @@ export const PageProduct = () => {
             />
           </Form.Group>
         </Row>
-        <Button variant="primary" type="submit">
-          Add Product +
-        </Button>
+        <Row>
+          <Col xs={1}>
+            <Button variant="primary" type="submit">
+              Update
+            </Button>
+          </Col>
+          <Col>
+            <Button variant="danger" type="button" onClick={deleteProduct}>
+              Delete
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </Container>
   );
