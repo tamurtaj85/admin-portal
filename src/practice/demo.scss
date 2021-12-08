@@ -1,0 +1,40 @@
+// .container {
+//   background-color: lightcoral;
+// }
+
+// .row {
+//   border: 1px darkred dashed;
+// }
+
+// .col {
+//   background-color: cornflowerblue;
+//   border: 1px white dotted;
+// }
+
+$border-radius-major: 30px;
+$border-radius-minor: 15px;
+
+.auth-form {
+  //  className="d-flex flex-column align-items-center justify-content-center"
+  //       style={{
+  //         height: "580px",
+  //         // border: "2px solid black",
+  //         borderRadius: "30px",
+  //         boxShadow: "-moz-initial",
+  //         // background: "lightgray",
+  //       }}
+  display: flex;
+  flex-flow: column;
+
+  justify-content: center;
+  align-items: center;
+
+  height: 580px;
+  width: 380px;
+
+  border-radius: $border-radius-major;
+
+  //   border: 1px black dashed;
+
+  box-shadow: 10px 6px 12px 1px rgba(211, 211, 211, 0.5);
+}

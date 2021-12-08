@@ -1,17 +1,25 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import "./scss/index.scss";
 
 // Components
-import { Alerts } from "./components/Alerts/component.alert";
-import Button from "./components/Buttons/component.button";
+// import { Alerts, ALERTS_VARIANTS } from "./components/Alerts/component.alert";
+// import Button from "./components/Buttons/component.button";
 
-import PAGE_AUTH from "./pages/page-auth";
+// Pages
+// import { PageAuth } from "./pages/auth/page-auth";
+// import { PageProduct } from "./pages/product/page-product";
+// import { PageUser } from "./pages/user/page-user";
+// import Demo from "./practice/practiceAuthPage";
 
 function App() {
   return (
     <div className="App">
-      <PAGE_AUTH />
-      <Button />
-      <Alerts />
+      {/* <Demo /> */}
+      {/* <PageAuth /> */}
+      {/* <PageProduct /> */}
+      {/* <PageUser /> */}
     </div>
   );
 }
