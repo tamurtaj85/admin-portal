@@ -8,6 +8,9 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 // Importing service
 import { Services } from "../../services";
 
+// import { ACTION_TYPE } from "../../redux/products/action-types-products";
+// import { store } from "../../store";
+
 // Table headings
 const tableHeadings = [
   "",
@@ -24,12 +27,14 @@ export const PageDisplayProduct = () => {
 
   async function getProductsData() {
     const response = await Services.Product.GetProducts();
-    setProducts(await response.data);
-    console.log(response);
+    setProducts(response.data);
+    // console.log(response);
   }
 
   useEffect(() => {
     getProductsData();
+    // store.dispatch({ type: [ACTION_TYPE.GET] });
+    // setProducts(store.getState());
   }, []);
 
   return (
@@ -38,7 +43,7 @@ export const PageDisplayProduct = () => {
         <Col>
           <h1 className="mb-5">Products</h1>
         </Col>
-        <Col className="d-sm-flex justify-content-end align-items-center">
+        <Col className="d-sm-flex justify-content-end align-items-start">
           <Button>
             <Link
               to="/add-product"

@@ -15,6 +15,9 @@ import { PageEditProduct } from "../pages/product/page-edit-product";
 import { PageDisplayUser } from "../pages/user/page-display-user";
 import { PageEditUser } from "../pages/user/page-edit-user";
 
+import { PageDisplayOrders } from "../pages/order/page-display-orders";
+import { PageDashboard } from "../pages/dashboard/page-dashboard";
+
 // Setting Up react router setup
 export const ReactRouterSetup = () => {
   return (
@@ -23,7 +26,7 @@ export const ReactRouterSetup = () => {
       <Routes>
         <Route path="/" element={<PageAuth />} />
 
-        <Route path="/dashboard" element={<h1>Dashboard</h1>} />
+        <Route path="/dashboard" element={<PageDashboard />} />
 
         {/* Product Routes */}
         <Route path="/products" element={<PageDisplayProduct />} />
@@ -33,6 +36,8 @@ export const ReactRouterSetup = () => {
         {/* User Routes */}
         <Route path="/users" element={<PageDisplayUser />} />
         <Route path="/edit-user/:id" element={<PageEditUser />} />
+
+        <Route path="/orders" element={<PageDisplayOrders />} />
       </Routes>
     </Router>
   );

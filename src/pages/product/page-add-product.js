@@ -32,7 +32,7 @@ export const PageAddProduct = () => {
 
   async function getCategories() {
     const response = await Services.Categories.getCategories();
-    setCategories(await response.data);
+    setCategories(response.data);
     // console.log(await (await response).data);
   }
 

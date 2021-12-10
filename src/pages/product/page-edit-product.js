@@ -28,13 +28,13 @@ export const PageEditProduct = () => {
   async function getProductByID() {
     const response = await Services.Product.GetProductByID(id);
 
-    if (response.status === 200) setProduct(await response.data);
+    if (response.status === 200) setProduct(response.data);
     // console.log("ByID: ", response);
   }
 
   async function getCategories() {
     const response = await Services.Categories.getCategories();
-    setCategories(await response.data);
+    setCategories(response.data);
     // console.log("Categories: ", response.data);
   }
 
