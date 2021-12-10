@@ -8,7 +8,7 @@ const USER_TOKEN =
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 5000,
+  timeout: 2000,
   headers: {
     // "Access-Control-Allow-Origin": BASE_URL,
     // "Access-Control-Allow-Headers":

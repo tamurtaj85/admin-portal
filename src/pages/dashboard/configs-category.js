@@ -5,12 +5,20 @@ import { Services } from "../../services";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const data = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-  datasets: [
+const options = {
+  layout: {
+    padding: 10,
+  },
+};
+
+async function ChartConfigs() {
+  const labels = await Services.Categories.getCategoriesNames();
+  const response = await Services.Categories.getNumberOfProductPerCategory();
+
+  const datasets = [
     {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
+      label: "Products Per Category",
+      data: response.data,
       backgroundColor: [
         "rgba(255, 99, 132)",
         "rgba(54, 162, 235)",
@@ -21,107 +29,42 @@ export const data = {
       ],
       borderColor: "white",
       borderWidth: 2.5,
+      hoverOffset: 10,
     },
-  ],
-};
+  ];
+
+  const data = {
+    labels,
+    datasets,
+  };
+  // console.log(labels, response.data);
+  // console.log(data);
+
+  return data;
+}
 
 export function CategoryChart() {
-  const [categories, setCategories] = useState([]);
+  const [configs, setConfigs] = useState(null);
 
-  //   Chart Configs
-  // const [labels, setChartLabels] = useState([]);
-  // const [datasets, setChartDataSets] = useState([]);
-  // const [dsLabel, setDS_Label] = useState("");
-  // const [dsData, setDS_Data] = useState([]);
-  // const [dsBGC, setDS_BGC] = useState([
-  //   "rgba(255, 99, 132)",
-  //   "rgba(54, 162, 235)",
-  //   "rgba(255, 206, 86)",
-  //   "rgba(75, 192, 192)",
-  //   "rgba(153, 102, 255)",
-  //   "rgba(255, 159, 64)",
-  // ]);
-  // const [dsBDC, setDS_BDC] = useState(["white"]);
-  // const [dsBDW, setDS_BDW] = useState(2);
+  async function setChartConfigs() {
+    const obj = await ChartConfigs();
+    setConfigs(obj);
+    // console.log(obj);
+  }
 
-  const [chartConfigs, setChartConfigs] = useState({});
+  function renderChart() {
+    // console.log("Configs: ", configs);
 
-  async function getCatData() {
-    const response = await Services.Categories.getCategories();
-    setCategories(response.data);
+    if (!configs) return <h6>Please Wait! Chart is being loaded</h6>;
+    else {
+      return <Doughnut data={configs} options={options} />;
+      // return <h3>Chart has loaded</h3>;
+    }
   }
 
   useEffect(() => {
-    getCatData();
+    setChartConfigs();
   }, []);
 
-  async function setConfigs() {
-    const labels = categories.map((category) => {
-      return category.parentCategory;
-    });
-
-    const response = await Services.Categories.getNumberOfProductPerCategory();
-
-    const data = {
-      labels,
-      datasets: [
-        {
-          lable: "Products Per Category",
-          data: response.data,
-          backgroundColor: [
-            "rgba(255, 99, 132)",
-            "rgba(54, 162, 235)",
-            "rgba(255, 206, 86)",
-            "rgba(75, 192, 192)",
-            "rgba(153, 102, 255)",
-            "rgba(255, 159, 64)",
-          ],
-          borderColor: "white",
-          borderWidth: 2,
-        },
-      ],
-    };
-
-    setChartConfigs(data);
-    console.log("ChartConfigs: ", chartConfigs);
-  }
-
-  // async function extractData() {
-  //   const labels = categories.map((category) => {
-  //     return category.parentCategory;
-  //   });
-
-  //   setChartLabels(labels);
-  // }
-
-  // async function setProductsByCategory() {
-  //   const response = await Services.Categories.getNumberOfProductPerCategory();
-  //   console.log("#Products:", response);
-
-  //   setDS_Data(response.data);
-  //   console.log(dsData);
-  // }
-
-  // function setDS_Object() {
-  //   setChartDataSets([
-  //     {
-  //       label: dsLabel,
-  //       data: dsData,
-  //       backgroundColor: dsBGC,
-  //       borderColor: dsBDC,
-  //       borderWidth: dsBDW,
-  //     },
-  //   ]);
-  // }
-
-  useEffect(() => {
-    setConfigs();
-    // extractData();
-    // setProductsByCategory();
-    // setDS_Object();
-    // setChartConfigs({ labels, datasets });
-  }, [chartConfigs]);
-
-  return <Doughnut data={chartConfigs} width={"100px"} height={"100px"} />;
-  // return <h1>test</h1>;
+  return <>{renderChart()}</>;
 }
