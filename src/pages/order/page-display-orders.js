@@ -25,7 +25,8 @@ const tableHeadings = [
 export const PageDisplayOrders = () => {
   const [orders, setOrders] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
-  const [orderDetails, setOrderDetails] = useState([]);
+  const [orderTableData, setOrderTableData] = useState([]);
+  const [orderTable, setOrderTable] = useState([]);
 
   async function getOrdersList() {
     const response = await Services.Order.getOrdersList();
@@ -34,20 +35,36 @@ export const PageDisplayOrders = () => {
     setOrderItems(response.data[1]);
   }
 
+  // Will render only for the first render (i.e. after page refresh)
   useEffect(() => {
     getOrdersList();
   }, []);
 
-  console.log(orders);
-  // console.log(orderDetails);
-  // console.log(
-  //   orderItems.map((item, index) => {
-  //     return {
-  //       ...item,
-  //       ...orders[index],
-  //     };
-  //   })
-  // );
+  // will render only whenever the orderItems value is being changed
+  useEffect(() => {
+    getOrderObject();
+  }, [orderItems]);
+
+  function getOrderObject() {
+    const data = orderItems.map((item, index) => {
+      return {
+        ...item,
+        ...orders[index],
+      };
+    });
+    setOrderTableData(data);
+    // console.log(orderTableData);
+  }
+
+  // async function getDataTable() {
+  //   const data = await SetTableData(orderTableData);
+  //   setOrderTable(data);
+  //   console.log("TableData: ", orderTable);
+  // }
+
+  // useEffect(() => {
+  //   getDataTable();
+  // }, [orderTableData]);
 
   return (
     <Container>
@@ -61,14 +78,10 @@ export const PageDisplayOrders = () => {
           <tr>{SetTableHeading(tableHeadings)}</tr>
         </thead>
         <tbody>
-          {SetTableData(
-            orderItems.map((item, index) => {
-              return {
-                ...item,
-                ...orders[index],
-              };
-            })
-          )}
+          {/* {orderTable.map((order) => {
+            return order;
+          })} */}
+          {SetTableData(orderTableData)}
         </tbody>
       </Table>
     </Container>

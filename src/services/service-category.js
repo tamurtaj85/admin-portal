@@ -4,7 +4,8 @@ async function getCategories() {
   try {
     return await axiosInstance.get("categories");
   } catch (error) {
-    console.log("Axios:", error.toJSON());
+    console.log("Axios: ", error.toJSON(), "Response: ", error?.response);
+    return error?.response ?? error.toJSON();
   }
 }
 
@@ -12,7 +13,8 @@ async function getNumberOfProductPerCategory() {
   try {
     return await axiosInstance.get("category", { timeout: 10000 });
   } catch (error) {
-    console.log("Axios:", error.toJSON());
+    console.log("Axios: ", error.toJSON(), "Response: ", error?.response);
+    return error?.response ?? error.toJSON();
   }
 }
 
@@ -28,7 +30,8 @@ async function getCategoriesNames() {
 
     return labels;
   } catch (error) {
-    console.log("Axios:", error.toJSON());
+    console.log("Axios: ", error.toJSON(), "Response: ", error?.response);
+    return error?.response ?? error.toJSON();
   }
 }
 

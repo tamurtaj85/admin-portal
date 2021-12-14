@@ -37,7 +37,9 @@ export const ReactRouterSetup = () => {
         <Route path="/users" element={<PageDisplayUser />} />
         <Route path="/edit-user/:id" element={<PageEditUser />} />
 
+        {/* Order Routes */}
         <Route path="/orders" element={<PageDisplayOrders />} />
+        <Route path="/edit-order/:id" element={<PageEditUser />} />
       </Routes>
     </Router>
   );

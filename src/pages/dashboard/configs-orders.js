@@ -12,6 +12,7 @@ import {
 import { Line } from "react-chartjs-2";
 import faker from "faker";
 import { Services } from "../../services";
+import { Spinner } from "../../components/LoadingButton/component-loadingButton";
 
 ChartJS.register(
   CategoryScale,
@@ -54,7 +55,7 @@ const labels = [
 async function getTotalOrders() {
   const response = await Services.Order.getOrdersList();
   const totalOrders = response?.data[0].length;
-  console.log(totalOrders);
+
   const data = {
     labels,
     datasets: [
@@ -90,8 +91,10 @@ export function OrderChart() {
   }
 
   function renderChart() {
-    if (!configs) return <h6>Please Wait! Chart is being loaded</h6>;
-    else {
+    if (!configs) {
+      return <Spinner />;
+      // return <h6>Please Wait! Chart is being loaded</h6>;
+    } else {
       return <Line options={options} data={configs} />;
     }
   }

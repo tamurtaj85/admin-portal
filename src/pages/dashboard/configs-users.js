@@ -11,6 +11,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import faker from "faker";
 import { Services } from "../../services";
+import { Spinner } from "../../components/LoadingButton/component-loadingButton";
 
 ChartJS.register(
   CategoryScale,
@@ -104,8 +105,10 @@ export function UserChart() {
   }
 
   function renderChart() {
-    if (!configs) return <h6>Please Wait! Chart is being loaded</h6>;
-    else {
+    if (!configs) {
+      return <Spinner />;
+      // return <h6>Please Wait! Chart is being loaded</h6>;
+    } else {
       return <Bar options={options} data={configs} />;
     }
   }

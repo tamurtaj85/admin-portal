@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 import List from "@mui/material/List";
@@ -96,6 +96,7 @@ export const PageDashboard = () => {
                 <ListItemText primary="Total Categories" secondary={6} />
               </ListItem>
             </List>
+            {/* <Spinner /> */}
           </Row>
         </Col>
       </Row>

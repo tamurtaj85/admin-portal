@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { Services } from "../../services";
+import { Spinner } from "../../components/LoadingButton/component-loadingButton";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -55,8 +56,10 @@ export function CategoryChart() {
   function renderChart() {
     // console.log("Configs: ", configs);
 
-    if (!configs) return <h6>Please Wait! Chart is being loaded</h6>;
-    else {
+    if (!configs) {
+      return <Spinner />;
+      // return <h6>Please Wait! Chart is being loaded</h6>;
+    } else {
       return <Doughnut data={configs} options={options} />;
       // return <h3>Chart has loaded</h3>;
     }
