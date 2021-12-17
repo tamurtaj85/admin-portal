@@ -26,11 +26,11 @@ export const PageDisplayOrders = () => {
   const [orders, setOrders] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
   const [orderTableData, setOrderTableData] = useState([]);
-  const [orderTable, setOrderTable] = useState([]);
+  const [orderTable, setOrderTable] = useState(null);
 
   async function getOrdersList() {
     const response = await Services.Order.getOrdersList();
-    // console.log("OrdersResponse: ",response);
+    // console.log("OrdersResponse: ", response);
     setOrders(response.data[0]);
     setOrderItems(response.data[1]);
   }
@@ -46,15 +46,15 @@ export const PageDisplayOrders = () => {
   }, [orderItems]);
 
   function getOrderObject() {
-    const data = orderItems.map((item, index) => {
+    const data = orders.map((item, index) => {
       return {
         ...item,
-        ...orders[index],
+        ...orderItems[index],
       };
     });
     setOrderTableData(data);
-    // console.log(orderTableData);
   }
+  // console.log(orderTableData);
 
   // async function getDataTable() {
   //   const data = await SetTableData(orderTableData);
@@ -62,9 +62,16 @@ export const PageDisplayOrders = () => {
   //   console.log("TableData: ", orderTable);
   // }
 
-  // useEffect(() => {
-  //   getDataTable();
-  // }, [orderTableData]);
+  function renderOrderTable() {
+    if (!orderTable) return <>Loading Async Table</>;
+    else {
+      return <>{orderTable}</>;
+    }
+  }
+
+  useEffect(() => {
+    setOrderTable(SetTableDataAsync(orderTableData));
+  }, [orderTableData]);
 
   return (
     <Container>
@@ -82,6 +89,7 @@ export const PageDisplayOrders = () => {
             return order;
           })} */}
           {SetTableData(orderTableData)}
+          {/* {renderOrderTable()} */}
         </tbody>
       </Table>
     </Container>
@@ -114,12 +122,38 @@ const SetTableData = (data) => {
   });
 };
 
+const SetTableDataAsync = async (data) => {
+  const table = await Promise.all(
+    data.map(async (order) => {
+      return (
+        <tr key={order._id}>
+          <td>
+            <Link to={`/edit-order/${order._id}`}>
+              <ModeEditIcon style={{ color: "#F45118" }} />
+            </Link>
+          </td>
+          <td>{order.createdAt?.slice(0, 10)}</td>
+          <td>{order.deliveryDate?.slice(0, 10)}</td>
+          <td>{await ProductService(order.productID)}</td>
+          <td>{order.quantity}</td>
+          <td>{await UserService(order.customerID)}</td>
+          <td>{order.orderType}</td>
+        </tr>
+      );
+    })
+  );
+
+  return table;
+};
+
 const ProductService = async (pID) => {
   const response = await Services.Product.GetProductByID(pID);
-  return response.data;
+  // console.log(response.data?.productName);
+  return response.data?.productName ?? "";
 };
 
 const UserService = async (uID) => {
   const response = await Services.Users.getUserByID(uID);
-  return response.data;
+  // console.log(response.data?.fullName);
+  return response.data?.fullName;
 };

@@ -2,13 +2,38 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
 
+import { useParams, useNavigate } from "react-router-dom";
+
+import { Services } from "../../services";
+
 export const PageEditUser = () => {
   const [user, setUser] = useState({
-    verified: Boolean,
-    userRole: String,
+    fullName: "",
+    email: "",
+    verified: "",
+    role: "",
   });
 
-  async function updateUserStatus() {}
+  const { id } = useParams();
+  const navigateTo = useNavigate();
+
+  async function getUser() {
+    const respone = await Services.Users.getUserByID(id);
+    // console.log(respone);
+    setUser(respone.data);
+  }
+
+  async function updateUserStatus() {
+    const response = await Services.Users.updateUserInfo(id, user);
+
+    if (response.status === 201) navigateTo("/users");
+    // console.log(response);
+    // console.log(user);
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   function handleChange(e) {
     e.preventDefault();
@@ -33,13 +58,21 @@ export const PageEditUser = () => {
             <Col>
               <Form.Group className="mb-3" controlId="formFullName">
                 <Form.Label>Full Name</Form.Label>
-                <Form.Control type="text" placeholder={`${"demo1"}`} readOnly />
+                <Form.Control
+                  type="text"
+                  placeholder={`${user.fullName}`}
+                  readOnly
+                />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group className="mb-3" controlId="formEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control type="text" placeholder={`${"demo2"}`} readOnly />
+                <Form.Control
+                  type="text"
+                  placeholder={`${user.email}`}
+                  readOnly
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -48,6 +81,7 @@ export const PageEditUser = () => {
               <Form.Group className="mb-3" controlId="formVarified">
                 <Form.Label>Status</Form.Label>
                 <Form.Select
+                  name="verified"
                   aria-label="Select User's Profile Status"
                   onChange={handleChange}
                   value={user.verified}
@@ -62,9 +96,10 @@ export const PageEditUser = () => {
               <Form.Group className="mb-3" controlId="formRole">
                 <Form.Label>Role</Form.Label>
                 <Form.Select
+                  name="role"
                   aria-label="Select User's Role"
                   onChange={handleChange}
-                  value={user.userRole}
+                  value={user.role}
                 >
                   <option>Select User's Role</option>
                   <option value="Super User">Super User</option>

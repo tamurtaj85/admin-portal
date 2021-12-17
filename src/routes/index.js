@@ -7,6 +7,8 @@ import { OffCanvasSidebar } from "../components/Sidebar/offCanvasSidebar";
 // Importing all the neccessary routing pages
 import { PageAuth } from "../pages/auth/page-auth";
 
+import { PageDashboard } from "../pages/dashboard/page-dashboard";
+
 import { PageDisplayProduct } from "../pages/product/page-display-product";
 import { PageAddProduct } from "../pages/product/page-add-product";
 import { PageEditProduct } from "../pages/product/page-edit-product";
@@ -16,7 +18,7 @@ import { PageDisplayUser } from "../pages/user/page-display-user";
 import { PageEditUser } from "../pages/user/page-edit-user";
 
 import { PageDisplayOrders } from "../pages/order/page-display-orders";
-import { PageDashboard } from "../pages/dashboard/page-dashboard";
+import { PageEditOrders } from "../pages/order/page-edit-orders";
 
 // Setting Up react router setup
 export const ReactRouterSetup = () => {
@@ -39,7 +41,7 @@ export const ReactRouterSetup = () => {
 
         {/* Order Routes */}
         <Route path="/orders" element={<PageDisplayOrders />} />
-        <Route path="/edit-order/:id" element={<PageEditUser />} />
+        <Route path="/edit-order/:id" element={<PageEditOrders />} />
       </Routes>
     </Router>
   );

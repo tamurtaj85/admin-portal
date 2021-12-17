@@ -66,14 +66,14 @@ export const PageEditProduct = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log("Product update: ", product);
+    // console.log("Product update: ", product);
     updateProduct();
   }
 
   return (
     <Container>
       <Row>
-        <h1>Add Product</h1>
+        <h1>Edit Product</h1>
       </Row>
 
       <Form onSubmit={handleSubmit}>

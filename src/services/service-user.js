@@ -18,7 +18,17 @@ async function getUserByID(uID) {
   }
 }
 
+async function updateUserInfo(uID, data) {
+  try {
+    return await axiosInstance.put(`user/:${uID}`, { ...data });
+  } catch (error) {
+    console.log("Axios: ", error.toJSON(), "Response: ", error?.response);
+    return error?.response ?? error.toJSON();
+  }
+}
+
 export const Users = {
   getUsers,
   getUserByID,
+  updateUserInfo,
 };

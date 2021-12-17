@@ -29,7 +29,7 @@ async function GetProductByID(id) {
 
 async function getProductByCategory(id) {
   try {
-    return await axiosInstance.get(`/products/category/:${id}`);
+    return await axiosInstance.get(`products/category/:${id}`);
   } catch (error) {
     console.log("Axios: ", error.toJSON(), "Response: ", error?.response);
     return error?.response ?? error.toJSON();
